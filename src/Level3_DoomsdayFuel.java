@@ -2,61 +2,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//        Fraction num1 = new Fraction(9,-3);
-//        Fraction num2 = new Fraction(-23,4);
-//        Fraction result = Fraction.add(num1, num2);
-//        System.out.println(num1.getNum() + "/" + num1.getDenom() + " plus ");
-//        System.out.println(num2.getNum() + "/" + num2.getDenom() + " equals ");
-//        System.out.println(result.getNum() + "/" + result.getDenom());
-//        System.out.println();
-//        result = Fraction.subtract(num1, num2);
-//        System.out.println(num1.getNum() + "/" + num1.getDenom() + " minus ");
-//        System.out.println(num2.getNum() + "/" + num2.getDenom() + " equals ");
-//        System.out.println(result.getNum() + "/" + result.getDenom());
-//        result = Fraction.multiply(num1, num2);
-//        System.out.println();
-//        System.out.println(num1.getNum() + "/" + num1.getDenom() + " times ");
-//        System.out.println(num2.getNum() + "/" + num2.getDenom() + " equals ");
-//        System.out.println(result.getNum() + "/" + result.getDenom());
-//        result = Fraction.divide(num1, num2);
-//        System.out.println();
-//        System.out.println(num1.getNum() + "/" + num1.getDenom() + " divided by ");
-//        System.out.println(num2.getNum() + "/" + num2.getDenom() + " equals ");
-//        System.out.println(result.getNum() + "/" + result.getDenom());
-//        System.out.println();
-//        result = Fraction.inverse(num2);
-//        System.out.println();
-//        System.out.println(num2.getNum() + "/" + num2.getDenom() + " inverse is ");
-//        System.out.println(result.getNum() + "/" + result.getDenom());
-//        System.out.println();
-//        List<Fraction> fractionList = new ArrayList<>();
-//        fractionList.add(num1);
-//        fractionList.add(num1);
-//        fractionList.add(num2);
-//        int LCM = Fraction.findLCM(fractionList);
-//        System.out.println(" LCM of ");
-//        System.out.println(num1.getNum() + "/" + num1.getDenom() + " and ");
-//        System.out.println(num1.getNum() + "/" + num1.getDenom() + " and ");
-//        System.out.println(num2.getNum() + "/" + num2.getDenom() + " is ");
-//        System.out.println(LCM);
-
-//        List<List<Fraction>> fracList = new ArrayList<>();
-//        List<Fraction> list_1 = new ArrayList<>();
-//        list_1.add(new Fraction(6));
-//        list_1.add(new Fraction(1));
-//        list_1.add(new Fraction(1));
-//        List<Fraction> list_2 = new ArrayList<>();
-//        list_2.add(new Fraction(4));
-//        list_2.add(new Fraction(-2));
-//        list_2.add(new Fraction(5));
-//        List<Fraction> list_3 = new ArrayList<>();
-//        list_3.add(new Fraction(2));
-//        list_3.add(new Fraction(8));
-//        list_3.add(new Fraction(7));
-//        fracList.add(list_1);
-//        fracList.add(list_2);
-//        fracList.add(list_3);
-//        Fraction det = getDet(fracList);
 public class Level3_DoomsdayFuel {
     public static int[] solution(int[][] m) {
         // Your code here
@@ -342,17 +287,17 @@ public class Level3_DoomsdayFuel {
         return determinant;
     }
 
-    private static List<List<Fraction>> reduceMatrix(int dim_i, int dim_j, List<List<Fraction>> m){
+    private static List<List<Fraction>> reduceMatrix(int row, int column, List<List<Fraction>> m){
         List<List<Fraction>> _m = new ArrayList<>();
         // add all rows other than first
         for(int i = 0; i < m.size(); i++){
-            if(i != dim_i){
+            if(i != row){
                 _m.add(new ArrayList<>(m.get(i)));
             }
         }
-        // remove column with dim index
+        // remove column with column index
         for (List<Fraction> fractions : _m) {
-            fractions.remove(dim_j);
+            fractions.remove(column);
         }
 
         return _m;
@@ -367,7 +312,7 @@ public class Level3_DoomsdayFuel {
         return true;
     }
 
-    private static class Fraction{
+    protected static class Fraction{
         int[] num = new int[2];
 
         Fraction(int numerator){
@@ -533,4 +478,6 @@ public class Level3_DoomsdayFuel {
             return Math.abs(num1*num2) / findGCD(num1, num2);
         }
     }
+
+
 }
