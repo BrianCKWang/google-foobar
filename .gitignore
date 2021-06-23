@@ -1,4 +1,4 @@
-./lib
-./.idea
-./out
-GoogleFoobar.iml
+/lib
+/.idea
+/out
+.iml
