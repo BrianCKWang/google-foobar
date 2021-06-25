@@ -167,7 +167,7 @@ public class Level3_DoomsdayFuel {
             List<Fraction> singleValue = new ArrayList<>();
             Fraction value = new Fraction(1);
             Fraction denom = m.get(0).get(0);
-            if(!Fraction.isEqual(m.get(0).get(0), new Fraction(0))){
+            if(!Fraction.isZero(m.get(0).get(0))){
                 value = Fraction.divide(value, denom);
             }
             else{
