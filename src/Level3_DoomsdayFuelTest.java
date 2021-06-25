@@ -310,4 +310,186 @@ class Level3_DoomsdayFuelTest {
         assertEquals(q4.getNum(), 1);
         assertEquals(q4.getDenom(), 1);
     }
+
+    @Test
+    void q4_staticAdd() throws Exception{
+        Level3_DoomsdayFuel.Fraction num1 = new Level3_DoomsdayFuel.Fraction(1, 4);
+        Level3_DoomsdayFuel.Fraction num2 = new Level3_DoomsdayFuel.Fraction(1, 7);
+        Level3_DoomsdayFuel.Fraction result = Level3_DoomsdayFuel.Fraction.add(num1, num2);
+        Level3_DoomsdayFuel.Fraction expected = new Level3_DoomsdayFuel.Fraction(11, 28);
+
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(result, expected), Level3_DoomsdayFuel.Fraction.compareResult.isEqual);
+
+    }
+
+    @Test
+    void q4_add() throws Exception{
+        Level3_DoomsdayFuel.Fraction num1 = new Level3_DoomsdayFuel.Fraction(1, 4);
+        Level3_DoomsdayFuel.Fraction num2 = new Level3_DoomsdayFuel.Fraction(1, 3);
+        num1.add(num2);
+
+
+        Level3_DoomsdayFuel.Fraction expected = new Level3_DoomsdayFuel.Fraction(7, 12);
+
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num1, expected), Level3_DoomsdayFuel.Fraction.compareResult.isEqual);
+    }
+
+    @Test
+    void q4_staticSubtract() throws Exception{
+        // arrange
+        Level3_DoomsdayFuel.Fraction num1 = new Level3_DoomsdayFuel.Fraction(1, 4);
+        Level3_DoomsdayFuel.Fraction num2 = new Level3_DoomsdayFuel.Fraction(1, 7);
+
+        // act
+        Level3_DoomsdayFuel.Fraction result = Level3_DoomsdayFuel.Fraction.subtract(num1, num2);
+        Level3_DoomsdayFuel.Fraction expected = new Level3_DoomsdayFuel.Fraction(3, 28);
+
+        // assert
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(result, expected), Level3_DoomsdayFuel.Fraction.compareResult.isEqual);
+    }
+
+    @Test
+    void q4_subtract() throws Exception{
+        // arrange
+        Level3_DoomsdayFuel.Fraction num1 = new Level3_DoomsdayFuel.Fraction(1, 3);
+        Level3_DoomsdayFuel.Fraction num2 = new Level3_DoomsdayFuel.Fraction(1, 4);
+
+        // act
+        num1.subtract(num2);
+        Level3_DoomsdayFuel.Fraction expected = new Level3_DoomsdayFuel.Fraction(1, 12);
+
+        // assert
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num1, expected), Level3_DoomsdayFuel.Fraction.compareResult.isEqual);
+    }
+
+    @Test
+    void q4_staticMultiply() throws Exception{
+        // arrange
+        Level3_DoomsdayFuel.Fraction num1 = new Level3_DoomsdayFuel.Fraction(1, 4);
+        Level3_DoomsdayFuel.Fraction num2 = new Level3_DoomsdayFuel.Fraction(5, 7);
+
+        // act
+        Level3_DoomsdayFuel.Fraction result = Level3_DoomsdayFuel.Fraction.multiply(num1, num2);
+        Level3_DoomsdayFuel.Fraction expected = new Level3_DoomsdayFuel.Fraction(5, 28);
+
+        // assert
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(result, expected), Level3_DoomsdayFuel.Fraction.compareResult.isEqual);
+    }
+
+    @Test
+    void q4_multiply() throws Exception{
+        // arrange
+        Level3_DoomsdayFuel.Fraction num1 = new Level3_DoomsdayFuel.Fraction(1, 3);
+        Level3_DoomsdayFuel.Fraction num2 = new Level3_DoomsdayFuel.Fraction(1, 4);
+
+        // act
+        num1.multiply(num2);
+        Level3_DoomsdayFuel.Fraction expected = new Level3_DoomsdayFuel.Fraction(1, 12);
+
+        // assert
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num1, expected), Level3_DoomsdayFuel.Fraction.compareResult.isEqual);
+    }
+
+    @Test
+    void q4_staticDivide() throws Exception{
+        // arrange
+        Level3_DoomsdayFuel.Fraction num1 = new Level3_DoomsdayFuel.Fraction(1, 4);
+        Level3_DoomsdayFuel.Fraction num2 = new Level3_DoomsdayFuel.Fraction(5, 7);
+
+        // act
+        Level3_DoomsdayFuel.Fraction result = Level3_DoomsdayFuel.Fraction.divide(num1, num2);
+        Level3_DoomsdayFuel.Fraction expected = new Level3_DoomsdayFuel.Fraction(7, 20);
+
+        // assert
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(result, expected), Level3_DoomsdayFuel.Fraction.compareResult.isEqual);
+    }
+
+    @Test
+    void q4_divide() throws Exception{
+        // arrange
+        Level3_DoomsdayFuel.Fraction num1 = new Level3_DoomsdayFuel.Fraction(1, 3);
+        Level3_DoomsdayFuel.Fraction num2 = new Level3_DoomsdayFuel.Fraction(1, 4);
+
+        // act
+        num1.divide(num2);
+        Level3_DoomsdayFuel.Fraction expected = new Level3_DoomsdayFuel.Fraction(4, 3);
+
+        // assert
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num1, expected), Level3_DoomsdayFuel.Fraction.compareResult.isEqual);
+    }
+
+    @Test
+    void q4_staticInverse() throws Exception{
+        // arrange
+        Level3_DoomsdayFuel.Fraction num1 = new Level3_DoomsdayFuel.Fraction(1, 4);
+
+        // act
+        Level3_DoomsdayFuel.Fraction result = Level3_DoomsdayFuel.Fraction.inverse(num1);
+        Level3_DoomsdayFuel.Fraction expected = new Level3_DoomsdayFuel.Fraction(4, 1);
+
+        // assert
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(result, expected), Level3_DoomsdayFuel.Fraction.compareResult.isEqual);
+    }
+
+    @Test
+    void q4_inverse() throws Exception{
+        // arrange
+        Level3_DoomsdayFuel.Fraction num1 = new Level3_DoomsdayFuel.Fraction(2, 3);
+
+        // act
+        num1.inverse();
+        Level3_DoomsdayFuel.Fraction expected = new Level3_DoomsdayFuel.Fraction(3, 2);
+
+        // assert
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num1, expected), Level3_DoomsdayFuel.Fraction.compareResult.isEqual);
+    }
+
+    @Test
+    void q4_staticIsZero() throws Exception{
+        // arrange
+        Level3_DoomsdayFuel.Fraction num1 = new Level3_DoomsdayFuel.Fraction(0, 4);
+        Level3_DoomsdayFuel.Fraction num2 = new Level3_DoomsdayFuel.Fraction(1, 4);
+
+        // act
+
+        // assert
+        assertEquals(Level3_DoomsdayFuel.Fraction.isZero(num1), true);
+        assertEquals(Level3_DoomsdayFuel.Fraction.isZero(num2), false);
+    }
+
+    @Test
+    void q4_isZero() throws Exception{
+        // arrange
+        Level3_DoomsdayFuel.Fraction num1 = new Level3_DoomsdayFuel.Fraction(0, 4);
+        Level3_DoomsdayFuel.Fraction num2 = new Level3_DoomsdayFuel.Fraction(1, 4);
+
+        // act
+
+        // assert
+        assertEquals(num1.isZero(), true);
+        assertEquals(num2.isZero(), false);
+    }
+
+    @Test
+    void q4_compare() throws Exception{
+        // arrange
+        Level3_DoomsdayFuel.Fraction num1 = new Level3_DoomsdayFuel.Fraction(-1, 3);
+        Level3_DoomsdayFuel.Fraction num2 = new Level3_DoomsdayFuel.Fraction(1, 4);
+        Level3_DoomsdayFuel.Fraction num3 = new Level3_DoomsdayFuel.Fraction(1, 2);
+        Level3_DoomsdayFuel.Fraction num4 = new Level3_DoomsdayFuel.Fraction(1, 2);
+        // act
+
+        // assert
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num1, num2), Level3_DoomsdayFuel.Fraction.compareResult.isLess);
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num1, num3), Level3_DoomsdayFuel.Fraction.compareResult.isLess);
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num2, num3), Level3_DoomsdayFuel.Fraction.compareResult.isLess);
+
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num2, num1), Level3_DoomsdayFuel.Fraction.compareResult.isLarger);
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num3, num1), Level3_DoomsdayFuel.Fraction.compareResult.isLarger);
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num3, num2), Level3_DoomsdayFuel.Fraction.compareResult.isLarger);
+
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num3, num4), Level3_DoomsdayFuel.Fraction.compareResult.isEqual);
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num3.multiply(num4), num2), Level3_DoomsdayFuel.Fraction.compareResult.isEqual);
+        assertEquals(Level3_DoomsdayFuel.Fraction.compare(num4.multiply(num4), num2), Level3_DoomsdayFuel.Fraction.compareResult.isEqual);
+    }
 }

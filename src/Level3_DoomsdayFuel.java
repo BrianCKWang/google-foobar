@@ -167,7 +167,7 @@ public class Level3_DoomsdayFuel {
             List<Fraction> singleValue = new ArrayList<>();
             Fraction value = new Fraction(1);
             Fraction denom = m.get(0).get(0);
-            if(Fraction.compare(m.get(0).get(0), new Fraction(0)) != 0){
+            if(!Fraction.isEqual(m.get(0).get(0), new Fraction(0))){
                 value = Fraction.divide(value, denom);
             }
             else{
@@ -188,22 +188,22 @@ public class Level3_DoomsdayFuel {
 
         // 2x2 matrix
         if(m.size() == 2){
-            Fraction detInverse = Fraction.inverse(getDet(m)) ;
-            List<List<Fraction>> ans = new ArrayList<>();
+            Fraction detInverse = getDet(m).inverse();
             List<Fraction> ans_row_1 = new ArrayList<>();
             List<Fraction> ans_row_2 = new ArrayList<>();
             Fraction a = m.get(0).get(0);
             Fraction b = m.get(0).get(1);
             Fraction c = m.get(1).get(0);
             Fraction d = m.get(1).get(1);
-
             Fraction posOne = new Fraction(1);
             Fraction negOne = new Fraction(-1);
 
-            ans_row_1.add(Fraction.multiply(posOne, Fraction.multiply(d, detInverse)));
-            ans_row_1.add(Fraction.multiply(negOne, Fraction.multiply(b, detInverse)));
-            ans_row_2.add(Fraction.multiply(negOne, Fraction.multiply(c, detInverse)));
-            ans_row_2.add(Fraction.multiply(posOne, Fraction.multiply(a, detInverse)));
+            ans_row_1.add(Fraction.multiply(posOne, d.multiply(detInverse)));
+            ans_row_1.add(Fraction.multiply(negOne, b.multiply(detInverse)));
+            ans_row_2.add(Fraction.multiply(negOne, c.multiply(detInverse)));
+            ans_row_2.add(Fraction.multiply(posOne, a.multiply(detInverse)));
+
+            List<List<Fraction>> ans = new ArrayList<>();
             ans.add(ans_row_1);
             ans.add(ans_row_2);
 
@@ -218,10 +218,9 @@ public class Level3_DoomsdayFuel {
             List<Fraction> m_adj_row = new ArrayList<>();
             for (int j = 0; j < matrixDim; j++) {
                 // make the new m-1 x m-1 matrix for calculating determinant
-                List<List<Fraction>> _m = reduceMatrix(i, j, m);
-                Fraction det = getDet(_m);
+                Fraction det = getDet(reduceMatrix(i, j, m));
                 Fraction sign = new Fraction((i+j)%2==0?1:-1);
-                m_adj_row.add(Fraction.multiply(sign, det));
+                m_adj_row.add(sign.multiply(det));
             }
             m_adj.add(m_adj_row);
         }
@@ -253,9 +252,8 @@ public class Level3_DoomsdayFuel {
         if(m.size() == 0 || m.size() != m.get(0).size()){
             return false;
         }
-        Fraction det = getDet(m);
-        Fraction zero = new Fraction(0);
-        return Fraction.compare(det,zero) != 0;
+
+        return !getDet(m).isZero();
     }
 
     private static Fraction getDet(List<List<Fraction>> m){
@@ -276,12 +274,17 @@ public class Level3_DoomsdayFuel {
         Fraction determinant = new Fraction(0);
         for(int dim = 0; dim < m.size(); dim++){
             // get determinant by reducing row 0
-            List<List<Fraction>> _m = reduceMatrix(0, dim, m);
+
+//            List<List<Fraction>> _m = reduceMatrix(0, dim, m);
+//            Fraction det = getDet(_m);
+//            Fraction dimFraction = new Fraction(dim%2==0?1:-1);
+//            Fraction det2 = dimFraction.multiply(m.get(0).get(dim));
+//            Fraction result = Fraction.multiply(det2,det);
+//            determinant.add(result);
+
+            Fraction det = getDet(reduceMatrix(0, dim, m));
             Fraction dimFraction = new Fraction(dim%2==0?1:-1);
-            Fraction det = getDet(_m);
-            Fraction det2 = Fraction.multiply(dimFraction, m.get(0).get(dim));
-            Fraction result = Fraction.multiply(det2,det);
-            determinant = Fraction.add(determinant, result);
+            determinant.add(dimFraction.multiply(det).multiply(m.get(0).get(dim)));
         }
 
         return determinant;
@@ -293,11 +296,9 @@ public class Level3_DoomsdayFuel {
         for(int i = 0; i < m.size(); i++){
             if(i != row){
                 _m.add(new ArrayList<>(m.get(i)));
+                // remove column with column index
+                _m.get(_m.size()-1).remove(column);
             }
-        }
-        // remove column with column index
-        for (List<Fraction> fractions : _m) {
-            fractions.remove(column);
         }
 
         return _m;
@@ -314,6 +315,12 @@ public class Level3_DoomsdayFuel {
 
     protected static class Fraction{
         int[] num = new int[2];
+
+        public enum compareResult{
+            isLess(-1), isEqual(0), isLarger(1);
+            compareResult(final int newValue) {
+            }
+        }
 
         Fraction(int numerator){
             num[0] = numerator;
@@ -353,14 +360,36 @@ public class Level3_DoomsdayFuel {
             this.num[1] = 1;
         }
 
-        public static int compare(Fraction num1, Fraction num2){
+        public void setFraction(Fraction num){
+            this.num[0] = num.getNum();
+            this.num[1] = num.getDenom();
+        }
+
+        public static boolean isEqual(Fraction num1, Fraction num2){
+            return (num1.getNum() == num2.getNum()) && (num1.getDenom() == num2.getDenom());
+        }
+
+        public boolean isZero(){
+            return num[0] == 0;
+        }
+
+        public static boolean isZero(Fraction num){
+            return num.getNum() == 0;
+        }
+
+        public static compareResult compare(Fraction num1, Fraction num2){
             if((num1.getNum() == num2.getNum()) && (num1.getDenom() == num2.getDenom())){
-                return 0;
+                return compareResult.isEqual;
             }
             else if(num1.getDouble() > num2.getDouble()){
-                return 1;
+                return compareResult.isLarger;
             }
-            return -1;
+            return compareResult.isLess;
+        }
+
+        public Fraction add(Fraction num){
+            this.setFraction(add(this, num));
+            return this;
         }
 
         public static Fraction add(Fraction num1, Fraction num2){
@@ -379,6 +408,11 @@ public class Level3_DoomsdayFuel {
             return simplifyFraction(new Fraction(totalNum, commonDenom));
         }
 
+        public Fraction subtract(Fraction num){
+            this.setFraction(subtract(this, num));
+            return this;
+        }
+
         public static Fraction subtract(Fraction num1, Fraction num2){
             if(num1.getNum() == 0){
                 return Fraction.multiply(new Fraction(-1), num2);
@@ -395,6 +429,11 @@ public class Level3_DoomsdayFuel {
             return simplifyFraction(new Fraction(totalNum, commonDenom));
         }
 
+        public Fraction multiply(Fraction num){
+            this.setFraction(multiply(this, num));
+            return this;
+        }
+
         public static Fraction multiply(Fraction num1, Fraction num2){
             int totalNum = num1.getNum() * num2.getNum();
             int commonDenom = num1.getDenom() * num2.getDenom();
@@ -403,6 +442,11 @@ public class Level3_DoomsdayFuel {
             }
 
             return simplifyFraction(new Fraction(totalNum, commonDenom));
+        }
+
+        public Fraction divide(Fraction num){
+            this.setFraction(divide(this, num));
+            return this;
         }
 
         public static Fraction divide(Fraction num1, Fraction num2){
@@ -420,6 +464,11 @@ public class Level3_DoomsdayFuel {
             }
 
             return simplifyFraction(new Fraction(totalNum, commonDenom));
+        }
+
+        public Fraction inverse(){
+            this.setFraction(inverse(this));
+            return this;
         }
 
         public static Fraction inverse(Fraction num){
